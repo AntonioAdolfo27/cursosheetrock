@@ -64,14 +64,13 @@
  
 /* HERO SECTION */
 .hero {    
-    position: relative;
+   position: relative;
     height: 100vh;
-    background: url("imagen 0 de daniel.jpeg") center / cover no-repeat;
+    background: url("imagen\ 0\ de\ daniel.jpeg") center / cover no-repeat;
     display: flex;
     align-items: center;
     padding: 60px;
     color: white;
-
     /* 🔥 CLAVE */
     background-attachment: fixed;
     background-position: center top;
@@ -1272,5 +1271,6 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
 
 
