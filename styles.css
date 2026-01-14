@@ -120,7 +120,6 @@
     url("imagen\ 0\ de\ daniel.jpeg");
 
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
 }
 
@@ -1423,5 +1422,6 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
 
 
