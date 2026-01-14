@@ -111,17 +111,17 @@
  
 /* HERO SECTION */
 .hero {    
-    position: relative;
-    height: 100vh;
-    background: url("imagen\ 0\ de\ daniel.jpeg") center / cover no-repeat;
-    display: flex;
-    align-items: center;
-    padding: 60px;
-    color: white;
+   position: relative;
+  min-height: 100svh;
+  min-height: 100vh;
 
-    /* 🔥 CLAVE */
-    background-attachment: fixed;
-    background-position: center top;
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("imagen\ 0\ de\ daniel.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* OVERLAY OSCURO */
@@ -142,8 +142,9 @@
 }
 
 .hero-content h1 {
+    margin-top: 10rem;
     font-size: 3rem;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     font-weight: bold;
 }
 
@@ -1319,6 +1320,7 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
 
 
 
