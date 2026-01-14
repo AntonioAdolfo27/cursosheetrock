@@ -3,11 +3,11 @@
     
 <head>
     <meta charset="UTF-8">
-    <title>Curso de SheetRock</title>
+    <title>Curso de SheetRock DYS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="imagen 11 de daniel.05 PM">
+    <link rel="icon" type="image/png" href="logo de daniel.jpeg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     
@@ -35,12 +35,17 @@
                
                 <!-- HEADER MOBILE -->
 <header class="mobile-header">
-    <div class="logo">Curso de SheetRock</div>
+    <div class="logo-container">
+        <!-- Logo 3D -->
+        <img src="logo de daniel.jpeg" alt="Logo Curso de SheetRock" class="logo-img">
+        <span class="logo-text">Curso de SheetRock DYS</span>
+    </div>
 
     <div class="menu-toggle" id="menuToggle">
         &#9776;
     </div>
 </header>
+
 
 <!-- MENU MOBILE -->
 <nav class="mobile-menu" id="mobileMenu">
@@ -66,7 +71,7 @@
             <h3>Duración y Contenido</h3>
             <p>
                 Nuestro curso intensivo está diseñado para ser completado
-                en solo 8 semanas, cubriendo desde los fundamentos hasta
+                en solo 4 semanas, cubriendo desde los fundamentos hasta
                 técnicas avanzadas. Aprenderás a medir, cortar, instalar
                 y terminar planchas de yeso con precisión profesional.
             </p>
@@ -104,11 +109,11 @@
 
         <!-- EXPERTO 1 -->
         <div class="expert-card">
-            <img src="imagen 2 de damiel.jpg" alt="Juan Pérez">
+            <img src="imagen de daniel.jpeg">
 
             <div class="expert-overlay">
-                <h3>Juan Pérez</h3>
-                <span>Instructor Principal</span>
+                <h3> ING Civil Daniel Yaliney</3>
+                <span>CAPACITADOR</span>
                 <p>
                     Más de 20 años de experiencia en construcción y acabados.
                     Especialista en técnicas avanzadas de instalación de
@@ -311,7 +316,6 @@
     </div>
  </section>
 
-
  <section class="registro-faq-wrapper">
   <section class="registro" id="registro1">
     <div class="registro-container">
@@ -343,8 +347,8 @@
         </div>
 
         <div class="campo">
-          <label>Fecha de Registro</label>
-          <input type="date" id="fecha" readonly value="<?php echo date('Y-m-d'); ?>">
+          <label>Fecha de Registro</label> 
+          <input type="date" id="fecha">
         </div>
 
         <div class="captcha-box">
@@ -431,7 +435,7 @@
         <div class="contact-info">
             <div class="info-card">
                 <h3>📞 Llámanos</h3>
-                <p>+XX XXX XXX XXXX</p>
+                <p>+1 (849) 865-0557</p>
             </div>
 
             <div class="info-card">
@@ -441,7 +445,7 @@
 
             <div class="info-card">
                 <h3>📍 Visítanos</h3>
-                <p>Calle Ficticia 123, Ciudad Ejemplo</p>
+                <p>Municipio Santo Domingo este, sector de invivienda calle Martin Luther king Jr, plaza  berkis Maria 3er nivel #8</p>
             </div>
         </div>
 
@@ -521,7 +525,7 @@
 
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-s
+
     const questions = document.querySelectorAll('.faq-question');
 
     questions.forEach(q => {
@@ -534,6 +538,14 @@ s
         });
     });
 
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const inputFecha = document.getElementById("fecha");
+  const hoy = new Date().toISOString().split("T")[0];
+  inputFecha.value = hoy;
+});
 </script>
 
 <script>
@@ -552,71 +564,79 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 });
 </script>
 
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const contactForm = document.getElementById("contactForm");
-  const contactMsg  = document.getElementById("contactMensaje");
+  const registroForm = document.getElementById("registroForm");
+  const mensajeBox = document.getElementById("registroMensaje");
 
-  contactForm.addEventListener("submit", function (e) {
+  // Poner fecha automáticamente
+  const fechaInput = document.getElementById("fecha");
+  const hoy = new Date().toISOString().split('T')[0];
+  fechaInput.value = hoy;
+
+  registroForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    // Obtener valores
-    const nombre   = contactForm.querySelector('[name="nombre"]').value.trim();
-    const email    = contactForm.querySelector('[name="email"]').value.trim();
-    const telefono = contactForm.querySelector('[name="telefono"]').value.trim();
-    const motivo   = contactForm.querySelector('[name="motivo"]').value;
-    const mensaje  = contactForm.querySelector('[name="mensaje"]').value.trim();
-    const noRobot  = document.getElementById("contactNoRobot");
+    const noRobot = document.getElementById("noRobot");
 
-    // Validaciones básicas
-    if (!nombre || !email || !telefono || !motivo || !mensaje) {
-      contactMsg.className = "registro-mensaje error";
-      contactMsg.textContent = "⚠️ Todos los campos son obligatorios.";
+    // Validación captcha
+    if (!noRobot.checked) {
+      mensajeBox.className = "registro-mensaje error";
+      mensajeBox.textContent = "⚠️ Debes confirmar que no eres un robot.";
       return;
     }
 
-    // Validar email
+    // Obtener datos
+    const nombre = registroForm.querySelector('[name="nombre"]').value.trim();
+    const apellido = registroForm.querySelector('[name="apellido"]').value.trim();
+    const email = registroForm.querySelector('[name="email"]').value.trim();
+    const telefono = registroForm.querySelector('[name="telefono"]').value.trim();
+    const fecha = fechaInput.value;
+
+    // Validaciones adicionales
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      contactMsg.className = "registro-mensaje error";
-      contactMsg.textContent = "⚠️ Ingresa un correo electrónico válido.";
+      mensajeBox.className = "registro-mensaje error";
+      mensajeBox.textContent = "⚠️ Ingresa un correo válido.";
       return;
     }
 
-    // Validar checkbox "No soy robot"
-    if (!noRobot.checked) {
-      contactMsg.className = "registro-mensaje error";
-      contactMsg.textContent = "⚠️ Confirma que no eres un robot.";
+    if (!nombre || !apellido || !telefono) {
+      mensajeBox.className = "registro-mensaje error";
+      mensajeBox.textContent = "⚠️ Todos los campos son obligatorios.";
       return;
     }
 
-    // Preparar mensaje para WhatsApp
-    const texto = `
-📩 *NUEVO MENSAJE DE CONTACTO*
+    // Mensaje WhatsApp
+    const mensaje = `
+📌 NUEVO REGISTRO – Curso de SheetRock
 
-👤 Nombre: ${nombre}
+👤 Nombre: ${nombre} ${apellido}
 📧 Email: ${email}
 📞 Teléfono: ${telefono}
-📌 Motivo: ${motivo}
+📅 Fecha: ${fecha}
 
-📝 Mensaje:
-${mensaje}
+✅ Registro confirmado correctamente.
     `;
 
-    // Tu número de WhatsApp (solo números, sin + ni espacios)
-    const telefonoWhatsApp = "18295893248";
-    const url = `https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(texto)}`;
+    const telefonoWhatsApp = "18295893248"; // 👈 TU NÚMERO
+    const url = `https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
-    contactMsg.className = "registro-mensaje success";
-    contactMsg.innerHTML = "✅ Mensaje listo. Abriendo WhatsApp…";
+    // Mensaje visual
+    mensajeBox.className = "registro-mensaje success";
+    mensajeBox.innerHTML = `
+        ✅ Registro enviado correctamente.<br>
+        📲 Serás redirigido a WhatsApp para continuar.
+    `;
 
-    // Abrir WhatsApp (PC o móvil)
-    window.open(url, "_blank");
+    // Redirección suave
+    setTimeout(() => {
+      window.open(url, "_blank"); // Abre WhatsApp sin cerrar la página
+      registroForm.reset();
+      noRobot.checked = false;
+    }, 1200);
 
-    // Limpiar formulario opcional
-    contactForm.reset();
   });
 
 });
@@ -719,7 +739,3 @@ document.querySelectorAll(".faq-question").forEach(question => {
 </body>
 
 </html>
-
-
-
-
