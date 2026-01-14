@@ -1,3 +1,4 @@
+/* RESET BÁSICO */
 * {
     margin: 0;
     padding: 0;
@@ -1267,12 +1268,3 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
-
-
-
-
-
-
-
-
-
