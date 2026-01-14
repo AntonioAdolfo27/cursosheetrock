@@ -56,10 +56,57 @@
 
  body{
 
-     background: linear-gradient(145deg, #161616, #202020);
+     background: linear-gradient(145deg, #000000, #000000);
      overflow-x: hidden;
 
  }
+
+ /* Contenedor del logo */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre logo y texto */
+}
+
+
+/* Imagen del logo */
+.logo-img {
+    width: 100px; 
+    height: 50px;
+    object-fit: contain;
+    background: transparent; /* ✅ asegura fondo transparente */
+    border-radius: 10px; /* opcional, elimina si quieres esquinas rectas */
+    /* Efecto 3D profesional */
+    box-shadow: 0 6px 12px rgb(52, 51, 51), 0 0 20px rgb(0, 0, 0);
+    transform: rotateY(0deg) rotateX(0deg);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Efecto hover 3D */
+.logo-img:hover {
+    transform: rotateY(15deg) rotateX(10deg);
+    box-shadow: 0 10px 20px rgb(255, 255, 255), 0 0 30px rgba(0,0,0,0.15);
+}
+
+/* Texto del curso */
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff; /* Mantener contraste con tu header */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* efecto sutil 3D */
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+    .logo-text {
+        font-size: 1.2rem;
+    }
+}
+
 
  
 /* HERO SECTION */
@@ -84,7 +131,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    
 }
 
 /* CONTENIDO */
@@ -202,7 +249,7 @@
     
     color: rgb(255, 255, 255);
     padding: 80px 20px;
-    background-image: linear-gradient(to right, #434343 0%, black 100%);
+    background-image: linear-gradient(to right, #000000 0%, black 100%);
 }
 
 .info-section h2 {
@@ -1272,12 +1319,6 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
-
-
-
-
-
-
 
 
 
