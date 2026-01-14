@@ -659,7 +659,7 @@ ${mensaje}
     contactMsg.innerHTML = "✅ Mensaje listo. Abriendo WhatsApp…";
 
     // Abrir WhatsApp (PC o móvil)
-    
+    window.open(url, "_blank");
 
     // Limpiar formulario opcional
     contactForm.reset();
@@ -696,5 +696,6 @@ document.querySelectorAll(".faq-question").forEach(question => {
 </body>
 
 </html>
+
 
 
