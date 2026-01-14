@@ -64,13 +64,14 @@
  
 /* HERO SECTION */
 .hero {    
-   position: relative;
+    position: relative;
     height: 100vh;
     background: url("imagen\ 0\ de\ daniel.jpeg") center / cover no-repeat;
     display: flex;
     align-items: center;
     padding: 60px;
     color: white;
+
     /* 🔥 CLAVE */
     background-attachment: fixed;
     background-position: center top;
@@ -716,9 +717,7 @@ section {
   margin-bottom: 18px;
 }
 
-.fecha2{
-    text-align: left;
-}
+
 
 .campo label {
   display: block;
@@ -733,12 +732,14 @@ section {
   border: 1px solid #555;
   background: #2b2b2b;
   color: #fff;
-  font-size: 15px;
+  font-size: 17px;
+  
 }
 
 .campo input:focus {
   outline: none;
   border-color: #fff;
+  
 }
 
 button {
@@ -1271,6 +1272,12 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
+
+
+
+
+
 
 
 
