@@ -715,6 +715,9 @@ section {
 
 .campo {
   margin-bottom: 18px;
+}
+
+.fecha2{
     text-align: left;
 }
 
@@ -1269,4 +1272,5 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
 
