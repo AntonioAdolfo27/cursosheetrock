@@ -311,52 +311,57 @@
     </div>
  </section>
 
- <section class="registro-faq-wrapper"></section>
 
- <section class="registro" id="registro1">
-  <div class="registro-container">
-    <h1>Registro Estudiantil</h1>
-    <p>
-      Completa el siguiente formulario para inscribirte en nuestro curso.
-      Nos pondremos en contacto contigo a la brevedad.
-    </p>
+ <section class="registro-faq-wrapper">
+  <section class="registro" id="registro1">
+    <div class="registro-container">
+      <h1>Registro Estudiantil</h1>
+      <p>
+        Completa el siguiente formulario para inscribirte en nuestro curso.
+        Nos pondremos en contacto contigo a la brevedad.
+      </p>
 
-    <form id="registroForm">
-      <div class="campo">
-        <label>Nombre</label>
-        <input type="text" placeholder="Ingresa tu nombre completo" required>
-      </div>
+      <form id="registroForm">
+        <div class="campo">
+          <label>Nombre</label>
+          <input type="text" name="nombre" placeholder="Ingresa tu nombre completo" required>
+        </div>
 
-      <div class="campo">
-        <label>Apellido</label>
-        <input type="text" placeholder="Ingresa tu apellido completo" required>
-      </div>
+        <div class="campo">
+          <label>Apellido</label>
+          <input type="text" name="apellido" placeholder="Ingresa tu apellido completo" required>
+        </div>
 
-      <div class="campo">
-        <label>Correo Electrónico</label>
-        <input type="email" placeholder="correo@ejemplo.com" required>
-      </div>
+        <div class="campo">
+          <label>Correo Electrónico</label>
+          <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+        </div>
 
-      <div class="campo">
-        <label>Número de Teléfono</label>
-        <input type="tel" placeholder="809-000-0000" pattern="[0-9\-]+" required>
-      </div>
+        <div class="campo">
+          <label>Número de Teléfono</label>
+          <input type="tel" name="telefono" placeholder="809-000-0000" pattern="[0-9\-]+" required>
+        </div>
 
-      <div class="campo">
-        <label>Fecha de Registro</label>
-        <input type="date" id="fecha" readonly>
-      </div>
-<div class="captcha-box">
-    <input type="checkbox" id="noRobot" required>
-    <label for="noRobot">
-        <span class="check"></span>
-        No soy un robot
-    </label>
-</div>
+        <div class="campo">
+          <label>Fecha de Registro</label>
+          <input type="date" id="fecha" readonly value="<?php echo date('Y-m-d'); ?>">
+        </div>
 
-      <button type="submit">Enviar Registro</button>
-    </form>
-  </div>
+        <div class="captcha-box">
+          <input type="checkbox" id="noRobot" required>
+          <label for="noRobot">
+            <span class="check"></span>
+            No soy un robot
+          </label>
+        </div>
+
+        <button type="submit" class="btn-export">Enviar Registro</button>
+
+        <!-- Mensaje de éxito o error -->
+        <p id="registroMensaje" class="registro-mensaje"></p>
+      </form>
+    </div>
+  </section>
 </section>
 
 
@@ -547,55 +552,73 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 });
 </script>
 
+
 <script>
-document.getElementById("registroForm").addEventListener("submit", function(e) {
+document.addEventListener("DOMContentLoaded", () => {
+
+  const contactForm = document.getElementById("contactForm");
+  const contactMsg  = document.getElementById("contactMensaje");
+
+  contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const mensajeBox = document.getElementById("registroMensaje");
-    const noRobot = document.getElementById("noRobot");
+    // Obtener valores
+    const nombre   = contactForm.querySelector('[name="nombre"]').value.trim();
+    const email    = contactForm.querySelector('[name="email"]').value.trim();
+    const telefono = contactForm.querySelector('[name="telefono"]').value.trim();
+    const motivo   = contactForm.querySelector('[name="motivo"]').value;
+    const mensaje  = contactForm.querySelector('[name="mensaje"]').value.trim();
+    const noRobot  = document.getElementById("contactNoRobot");
 
-    // VALIDACIÓN CAPTCHA
-    if (!noRobot.checked) {
-        mensajeBox.className = "registro-mensaje error";
-        mensajeBox.textContent = "⚠️ Debes confirmar que no eres un robot.";
-        return;
+    // Validaciones básicas
+    if (!nombre || !email || !telefono || !motivo || !mensaje) {
+      contactMsg.className = "registro-mensaje error";
+      contactMsg.textContent = "⚠️ Todos los campos son obligatorios.";
+      return;
     }
 
-    // OBTENER DATOS
-    const nombre = document.querySelector('input[placeholder="Ingresa tu nombre completo"]').value;
-    const apellido = document.querySelector('input[placeholder="Ingresa tu apellido completo"]').value;
-    const email = document.querySelector('input[type="email"]').value;
-    const telefono = document.querySelector('input[type="tel"]').value;
-    const fecha = document.getElementById("fecha").value;
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      contactMsg.className = "registro-mensaje error";
+      contactMsg.textContent = "⚠️ Ingresa un correo electrónico válido.";
+      return;
+    }
 
-    // MENSAJE WHATSAPP
-    const mensaje = `
-📌 NUEVO REGISTRO – Curso de SheetRock
+    // Validar checkbox "No soy robot"
+    if (!noRobot.checked) {
+      contactMsg.className = "registro-mensaje error";
+      contactMsg.textContent = "⚠️ Confirma que no eres un robot.";
+      return;
+    }
 
-👤 Nombre: ${nombre} ${apellido}
+    // Preparar mensaje para WhatsApp
+    const texto = `
+📩 *NUEVO MENSAJE DE CONTACTO*
+
+👤 Nombre: ${nombre}
 📧 Email: ${email}
 📞 Teléfono: ${telefono}
-📅 Fecha: ${fecha}
+📌 Motivo: ${motivo}
 
-✅ Registro confirmado correctamente.
-`;
-
-    const telefonoWhatsApp = "18295893248"; // 👈 TU NÚMERO
-    const url = `https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-    // MENSAJE VISUAL (IGUAL AL CONTACTO)
-    mensajeBox.className = "registro-mensaje success";
-    mensajeBox.innerHTML = `
-        ✅ Registro enviado correctamente.<br>
-        📲 Serás redirigido a WhatsApp para continuar.
+📝 Mensaje:
+${mensaje}
     `;
 
-    // ESPERA SUAVE Y ACCIÓN
-    setTimeout(() => {
-        
-     window.location.href = url;
-        document.getElementById("registroForm").reset();
-    }, 1100);
+    // Tu número de WhatsApp (solo números, sin + ni espacios)
+    const telefonoWhatsApp = "18295893248";
+    const url = `https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(texto)}`;
+
+    contactMsg.className = "registro-mensaje success";
+    contactMsg.innerHTML = "✅ Mensaje listo. Abriendo WhatsApp…";
+
+    // Abrir WhatsApp (PC o móvil)
+    window.open(url, "_blank");
+
+    // Limpiar formulario opcional
+    contactForm.reset();
+  });
+
 });
 </script>
 
@@ -696,6 +719,7 @@ document.querySelectorAll(".faq-question").forEach(question => {
 </body>
 
 </html>
+
 
 
 
