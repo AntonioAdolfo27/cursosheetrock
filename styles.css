@@ -1376,7 +1376,7 @@ button:hover {
 }
 
 .footer-content p {
-  color: #999;
+  color: #ffffff48;
   font-size: 0.85rem;
   margin: 6px 0;
 }
@@ -1423,4 +1423,5 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
 
