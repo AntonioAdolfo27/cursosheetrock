@@ -1383,7 +1383,7 @@ button:hover {
 
 /* FIRMA */
 .dev-name {
-  color: #4ea1ff;
+  color: #494949;
   font-weight: 600;
   text-decoration: none;
   position: relative;
@@ -1393,16 +1393,15 @@ button:hover {
 /* ANIMACIÓN SUTIL */
 @keyframes glow {
   0% {
-    text-shadow: 0 0 0 rgba(78, 161, 255, 0);
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0.898);
   }
   50% {
-    text-shadow: 0 0 10px rgba(78, 161, 255, 0.6);
+    text-shadow: 0 0 10px rgb(0, 0, 0);
   }
   100% {
-    text-shadow: 0 0 0 rgba(78, 161, 255, 0);
+    text-shadow: 0 0 0 rgb(0, 0, 0);
   }
 }
-
 /* TOOLTIP PORTAFOLIO */
 .dev-name::after {
   content: "Ver portafolio profesional";
@@ -1424,3 +1423,4 @@ button:hover {
 .dev-name:hover::after {
   opacity: 1;
 }
+
