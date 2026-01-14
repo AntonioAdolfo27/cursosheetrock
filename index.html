@@ -414,7 +414,6 @@
 </section>
 <div id="contactMensaje" class="registro-mensaje"></div>
 
-
 <section class="contact-section" id="Contáctanos">
     <h2>Contáctanos</h2>
     <p class="subtitle">
@@ -441,14 +440,14 @@
             </div>
         </div>
 
-        <form class="contact-form">
+        <form class="contact-form" id="contactForm">
             <h3>Formulario de Contacto</h3>
 
-            <input type="text" placeholder="Nombre completo" required>
-            <input type="email" placeholder="Correo electrónico" required>
-            <input type="tel" placeholder="Teléfono" required>
+            <input type="text" name="nombre" placeholder="Nombre completo" required>
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="tel" name="telefono" placeholder="Teléfono" required>
 
-            <select required>
+            <select name="motivo" required>
                 <option value="">Motivo de contacto</option>
                 <option>Información del curso</option>
                 <option>Opciones de pago</option>
@@ -456,15 +455,15 @@
                 <option>Otro</option>
             </select>
 
-            <textarea placeholder="Escribe tu mensaje aquí..." required></textarea>
-            <div class="captcha-box">
-  <input type="checkbox" id="contactNoRobot">
-  <label for="contactNoRobot">
-    <span class="check"></span>
-    No soy un robot
-  </label>
-</div>
+            <textarea name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
 
+            <div class="captcha-box">
+                <input type="checkbox" id="contactNoRobot">
+                <label for="contactNoRobot">
+                    <span class="check"></span>
+                    No soy un robot
+                </label>
+            </div>
 
             <button type="submit">Enviar solicitud</button>
 
@@ -472,10 +471,30 @@
                 * Tu solicitud será revisada por nuestro equipo académico.  
                 No se responderán mensajes informales.
             </p>
+
+            <!-- Mensaje de éxito o error -->
+            <p id="contactMensaje" class="registro-mensaje"></p>
         </form>
 
     </div>
 </section>
+
+
+<section class="map-section">
+  <h2>Nuestra Ubicación</h2>
+  <p class="subtitle">
+    Visítanos o contáctanos para más información sobre el curso.
+  </p>
+
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps?q=18.4861,-69.9312&hl=es&z=15&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
 
 <footer class="footer">
   <div class="footer-content">
@@ -493,10 +512,7 @@
 </footer>
 
 
-
 <div id="registroMensaje" class="registro-mensaje"></div>
-
-
 
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -576,34 +592,55 @@ document.getElementById("registroForm").addEventListener("submit", function(e) {
 
     // ESPERA SUAVE Y ACCIÓN
     setTimeout(() => {
-        window.open(url, "_blank");
+        
+     window.location.href = url;
         document.getElementById("registroForm").reset();
     }, 1100);
 });
 </script>
 
 <script>
-document.querySelector(".contact-form").addEventListener("submit", function(e) {
+document.addEventListener("DOMContentLoaded", () => {
+
+  const contactForm = document.getElementById("contactForm");
+  const contactMsg  = document.getElementById("contactMensaje");
+
+  contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const mensajeBox = document.getElementById("contactMensaje");
+    // Obtener valores
+    const nombre   = contactForm.querySelector('[name="nombre"]').value.trim();
+    const email    = contactForm.querySelector('[name="email"]').value.trim();
+    const telefono = contactForm.querySelector('[name="telefono"]').value.trim();
+    const motivo   = contactForm.querySelector('[name="motivo"]').value;
+    const mensaje  = contactForm.querySelector('[name="mensaje"]').value.trim();
+    const noRobot  = document.getElementById("contactNoRobot");
 
-    const nombre = this.querySelector('input[type="text"]').value;
-    const email = this.querySelector('input[type="email"]').value;
-    const telefono = this.querySelector('input[type="tel"]').value;
-    const motivo = this.querySelector("select").value;
-    const mensajeTexto = this.querySelector("textarea").value;
-    const noRobot = document.getElementById("contactNoRobot");
-
-    if (!noRobot.checked) {
-        mensajeBox.className = "registro-mensaje error";
-        mensajeBox.textContent = "⚠️ Confirma que no eres un robot.";
-        return;
+    // Validaciones básicas
+    if (!nombre || !email || !telefono || !motivo || !mensaje) {
+      contactMsg.className = "registro-mensaje error";
+      contactMsg.textContent = "⚠️ Todos los campos son obligatorios.";
+      return;
     }
 
-    /* 📲 MENSAJE WHATSAPP */
-    const mensajeWhatsApp = `
-📩 NUEVO MENSAJE DE CONTACTO
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      contactMsg.className = "registro-mensaje error";
+      contactMsg.textContent = "⚠️ Ingresa un correo electrónico válido.";
+      return;
+    }
+
+    // Validar checkbox "No soy robot"
+    if (!noRobot.checked) {
+      contactMsg.className = "registro-mensaje error";
+      contactMsg.textContent = "⚠️ Confirma que no eres un robot.";
+      return;
+    }
+
+    // Preparar mensaje para WhatsApp
+    const texto = `
+📩 *NUEVO MENSAJE DE CONTACTO*
 
 👤 Nombre: ${nombre}
 📧 Email: ${email}
@@ -611,25 +648,52 @@ document.querySelector(".contact-form").addEventListener("submit", function(e) {
 📌 Motivo: ${motivo}
 
 📝 Mensaje:
-${mensajeTexto}
-`;
-
-    const telefonoWhatsApp = "18295893248"; // 👈 TU NÚMERO
-    const url = `https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
-
-    mensajeBox.className = "registro-mensaje success";
-    mensajeBox.innerHTML = `
-        ✅ Tu mensaje fue enviado correctamente.<br>
-        📲 Un asesor académico se comunicará contigo.
+${mensaje}
     `;
 
-    setTimeout(() => {
-        window.open(url, "_blank");
-        this.reset();
-    }, 1000);
+    // Tu número de WhatsApp (solo números, sin + ni espacios)
+    const telefonoWhatsApp = "18295893248";
+    const url = `https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(texto)}`;
+
+    contactMsg.className = "registro-mensaje success";
+    contactMsg.innerHTML = "✅ Mensaje listo. Abriendo WhatsApp…";
+
+    // Abrir WhatsApp (PC o móvil)
+    window.open(url, "_blank");
+
+    // Limpiar formulario opcional
+    contactForm.reset();
+  });
+
 });
 </script>
+
+
+
+
+<script>
+document.querySelectorAll(".faq-question").forEach(question => {
+    question.addEventListener("click", () => {
+        const isActive = question.classList.contains("active");
+
+        // Cerrar todos
+        document.querySelectorAll(".faq-question").forEach(q => {
+            q.classList.remove("active");
+            q.nextElementSibling.style.maxHeight = null;
+        });
+
+        // Abrir solo el seleccionado
+        if (!isActive) {
+            question.classList.add("active");
+            const answer = question.nextElementSibling;
+            answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+    });
+});
+</script>
+
 
 </body>
 
 </html>
+
